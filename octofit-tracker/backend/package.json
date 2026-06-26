@@ -1,0 +1,23 @@
+{
+  "name": "octofit-backend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "PORT=8000 tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "PORT=8000 node dist/server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.7.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
