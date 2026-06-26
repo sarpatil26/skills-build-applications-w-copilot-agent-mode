@@ -1,5 +1,5 @@
-const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const hostname = window.location.hostname;
 
-export const apiBaseUrl = codespaceName
-	? `https://${codespaceName}-8000.app.github.dev`
-	: 'http://localhost:8000'
+export const apiBaseUrl = hostname.includes("github.dev")
+  ? window.location.origin.replace("-5173", "-8000")
+  : "http://localhost:8000";
