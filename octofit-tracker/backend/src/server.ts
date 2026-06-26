@@ -9,9 +9,7 @@ import workoutsRouter from "./routes/workouts";
 
 const app = express();
 const port = 8000;
-const apiBaseUrl = process.env.CODESPACE_NAME
-  ? `https://${process.env.CODESPACE_NAME}-8000.app.github.dev`
-  : "http://localhost:8000";
+const apiBaseUrl = getApiBaseUrl();
 
 app.use(express.json());
 
@@ -39,7 +37,11 @@ app.use("/api/leaderboard", leaderboardRouter);
 app.use("/api/workouts", workoutsRouter);
 
 const startServer = async (): Promise<void> => {
-  await connectToDatabase();
+  try {
+    await connectToDatabase();
+  } catch (error: unknown) {
+    console.warn("Database connection unavailable, continuing in API-only mode", error);
+  }
 
   app.listen(port, () => {
     console.log(`Octofit backend listening at ${apiBaseUrl}`);
