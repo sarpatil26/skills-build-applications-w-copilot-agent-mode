@@ -8,7 +8,8 @@
     "dev": "PORT=8000 tsx watch src/server.ts",
     "build": "tsc",
     "start": "PORT=8000 node dist/server.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed": "tsx src/scripts/seed.ts"
   },
   "dependencies": {
     "express": "^5.2.1",
