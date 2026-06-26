@@ -1,6 +1,6 @@
 import express from "express";
 import { getApiBaseUrl } from "./config/baseUrl";
-import { connectToDatabase } from "./config/db";
+import { connectToDatabase } from "./config/database";
 import activitiesRouter from "./routes/activities";
 import leaderboardRouter from "./routes/leaderboard";
 import teamsRouter from "./routes/teams";
