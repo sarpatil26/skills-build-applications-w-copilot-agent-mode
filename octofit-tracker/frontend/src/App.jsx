@@ -1,121 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import Activities from './components/Activities'
+import Leaderboard from './components/Leaderboard'
+import Teams from './components/Teams'
+import Users from './components/Users'
+import Workouts from './components/Workouts'
+import { apiBaseUrl } from './config/apiBaseUrl'
 
-function App() {
-  const [count, setCount] = useState(0)
+const logo = new URL('../../../docs/octofitapp-small.png', import.meta.url).href
 
+function HomePage() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="container py-5">
+      <div className="row align-items-center g-4">
+        <div className="col-md-4 text-center text-md-start">
+          <img src={logo} alt="Octofit logo" className="img-fluid" style={{ maxWidth: '180px' }} />
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+        <div className="col-md-8">
+          <h1 className="display-5 fw-bold">Octofit Tracker</h1>
+          <p className="lead mb-0">
+            Multi-tier fitness tracking with users, teams, activities, leaderboard, and workouts.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </div>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
+function ApiPage() {
+  const endpoints = [
+    `${apiBaseUrl}/api/users/`,
+    `${apiBaseUrl}/api/teams/`,
+    `${apiBaseUrl}/api/activities/`,
+    `${apiBaseUrl}/api/leaderboard/`,
+    `${apiBaseUrl}/api/workouts/`,
+  ]
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+  return (
+    <div className="container pb-5">
+      <h2 className="h3 mb-3">Available API Endpoints</h2>
+      <div className="list-group">
+        {endpoints.map((endpoint) => (
+          <div key={endpoint} className="list-group-item">
+            {endpoint}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <div className="min-vh-100 bg-light">
+      <nav className="navbar navbar-expand border-bottom bg-white">
+        <div className="container">
+          <span className="navbar-brand fw-semibold">Octofit</span>
+          <div className="navbar-nav gap-3">
+            <NavLink to="/" end className="nav-link">Home</NavLink>
+            <NavLink to="/api" className="nav-link">API</NavLink>
+            <NavLink to="/activities" className="nav-link">Activities</NavLink>
+            <NavLink to="/leaderboard" className="nav-link">Leaderboard</NavLink>
+            <NavLink to="/teams" className="nav-link">Teams</NavLink>
+            <NavLink to="/users" className="nav-link">Users</NavLink>
+            <NavLink to="/workouts" className="nav-link">Workouts</NavLink>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </nav>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/api" element={<ApiPage />} />
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/teams" element={<Teams />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/workouts" element={<Workouts />} />
+      </Routes>
+    </div>
   )
 }
 
