@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { apiBaseUrl } from '../config/apiBaseUrl'
 import { normalizeCollectionResponse } from '../utils/normalizeCollectionResponse'
 
 function Activities() {
+  const apiEndpoint = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+    : 'http://localhost:8000/api/activities/'
+
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -10,7 +13,7 @@ function Activities() {
   useEffect(() => {
     const loadActivities = async () => {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/activities/`)
+        const response = await fetch(apiEndpoint)
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)

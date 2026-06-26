@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { apiBaseUrl } from '../config/apiBaseUrl'
 import { normalizeCollectionResponse } from '../utils/normalizeCollectionResponse'
 
 function Workouts() {
+  const apiEndpoint = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`
+    : 'http://localhost:8000/api/workouts/'
+
   const [workouts, setWorkouts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -10,7 +13,7 @@ function Workouts() {
   useEffect(() => {
     const loadWorkouts = async () => {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/workouts/`)
+        const response = await fetch(apiEndpoint)
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
